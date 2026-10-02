@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ArcadiaWeather.Core/ArcadiaWeather.Core.csproj" />
+    <Project Path="src/ArcadiaWeather/ArcadiaWeather.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ArcadiaWeather.Tests/ArcadiaWeather.Tests.csproj" />
+    <Project Path="tests/ArcadiaWeather.Preferences.Tests/ArcadiaWeather.Preferences.Tests.csproj" />
+  </Folder>
+</Solution>

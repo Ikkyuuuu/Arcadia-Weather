@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#36bbd9">
+  <meta name="color-scheme" content="light">
+  <title>Arcadia Weather — Interactive prototype</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 13.3A9 9 0 0 1 10.7 3.5 9 9 0 1 0 20.5 13.3Z"/></symbol>
+      <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M6 18a4 4 0 0 1-.4-8A6.5 6.5 0 0 1 18 8a5 5 0 0 1 0 10Z"/></symbol>
+      <symbol id="i-rain" viewBox="0 0 24 24"><path d="M6 14a3.5 3.5 0 0 1-.3-7A5.5 5.5 0 0 1 16.5 6a4 4 0 0 1 1 8M7 18l-1 3m6-3-1 3m6-3-1 3"/></symbol>
+      <symbol id="i-storm" viewBox="0 0 24 24"><path d="M6 14a3.5 3.5 0 0 1-.3-7A5.5 5.5 0 0 1 16.5 6a4 4 0 0 1 1 8M12 12l-3 5h5l-3 5"/></symbol>
+      <symbol id="i-sunset" viewBox="0 0 24 24"><path d="M2 17h20M4 21h16M6 17a6 6 0 0 1 12 0M12 3v3M3 9l2 2m14 0 2-2"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 5 7 7-7 7"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke-width="3"/></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 4 12 8-12 8Z"/></symbol>
+      <symbol id="i-volume" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5ZM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+      <symbol id="i-muted" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5Zm5 5 6 6m0-6-6 6"/></symbol>
+      <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M12 17v4m-4 0h8"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12m0-12L6 18"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+      <symbol id="i-locate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.1"/></symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5M5.3 7a8 8 0 0 1 13.2-1L20 8M4 16l1.5 2A8 8 0 0 0 18.7 17"/></symbol>
+      <symbol id="i-wind" viewBox="0 0 24 24"><path d="M3 8h12a3 3 0 1 0-3-3M2 12h17a3 3 0 1 1-3 3M4 16h5a3 3 0 1 1-3 3"/></symbol>
+      <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 2S5 10 5 15a7 7 0 0 0 14 0c0-5-7-13-7-13Z"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="topbar">
+    <a class="brand" href="#wallpaper" aria-label="Arcadia Weather home">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M7 25a13 13 0 0 1 26 0M3 25h34M8 31h24M20 4v4M6 11l4 4m20 0 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <span>arcadia<span class="brand-secondary">weather</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#wallpaper" id="nav-wallpaper" aria-current="page">Wallpaper</a>
+      <a href="#settings" id="nav-settings">Settings</a>
+    </nav>
+    <span class="prototype-badge">Sample data <span aria-hidden="true">↗</span></span>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section id="wallpaper-view" aria-labelledby="wallpaper-heading">
+      <div class="page-heading">
+        <div><p class="eyebrow">Life is Strange · Arcadia Bay</p><h1 id="wallpaper-heading" tabindex="-1">Your wallpaper</h1></div>
+        <button class="text-button rules-trigger" type="button"><svg class="icon"><use href="#i-info"/></svg>Scene rules</button>
+      </div>
+
+      <div class="workspace-grid">
+        <section class="preview-card" aria-label="Current wallpaper preview">
+          <div class="preview-stage" id="preview-stage">
+            <img id="preview-poster" src="assets/day1.jpg" alt="Sunlight falls across Arcadia Bay, its beach and wooded cliffs." width="1200" height="675">
+            <video id="wallpaper-video" muted loop playsinline preload="metadata" aria-label="Animated wallpaper preview"></video>
+            <div class="preview-shade" aria-hidden="true"></div>
+            <div class="preview-topline"><span class="preview-label">Desktop preview</span><span class="playback-status" id="playback-status"><span class="status-dot"></span><span id="playback-status-text">Loading</span></span></div>
+            <div class="preview-bottomline"><div><span class="scene-day" id="preview-day">Day 1</span><h2 id="preview-name">Daylight</h2></div><span class="preview-mode" id="preview-mode">Automatic</span></div>
+          </div>
+          <div class="playback-bar">
+            <button type="button" class="transport-button" id="pause-button" aria-label="Pause wallpaper"><svg class="icon"><use id="pause-icon" href="#i-pause"/></svg><span id="pause-label">Pause</span></button>
+            <span class="display-label"><svg class="icon"><use href="#i-monitor"/></svg><span id="preview-display">Display 1</span></span>
+            <div class="volume-control"><button class="icon-button" type="button" id="mute-button" aria-label="Unmute wallpaper" aria-pressed="true"><svg class="icon"><use id="volume-icon" href="#i-muted"/></svg></button><label class="sr-only" for="volume">Wallpaper volume</label><input id="volume" type="range" min="0" max="100" value="40"><output id="volume-value" for="volume">40%</output></div>
+          </div>
+          <p id="playback-note" class="playback-note" hidden></p>
+        </section>
+
+        <aside class="weather-sidebar" aria-label="Weather and wallpaper mode">
+          <section class="weather-summary" aria-labelledby="weather-heading">
+            <div class="section-kicker"><h2 id="weather-heading">Your weather</h2><span class="sample-label">Sample</span></div>
+            <button class="location-button" id="location-shortcut" type="button"><svg class="icon"><use href="#i-pin"/></svg><span id="current-city">Astoria</span><svg class="icon location-arrow"><use href="#i-chevron"/></svg></button>
+            <p class="location-region" id="current-region">Oregon, United States</p>
+            <div class="weather-reading"><span id="temperature">18<span>°C</span></span><svg class="weather-symbol"><use id="weather-icon" href="#i-sun"/></svg></div>
+            <div class="weather-description"><strong id="weather-description">Clear skies</strong><span id="local-time">16:20</span></div>
+            <p class="local-period" id="local-period">Afternoon · sample local time</p>
+            <div class="weather-details"><span><svg class="icon"><use href="#i-wind"/></svg><span id="wind-speed">12 km/h</span></span><span><svg class="icon"><use href="#i-drop"/></svg><span id="humidity">68%</span></span></div>
+          </section>
+
+          <section class="mode-section" aria-labelledby="mode-heading">
+            <div class="section-kicker"><h2 id="mode-heading">Wallpaper mode</h2></div>
+            <div class="segmented-control" role="group" aria-label="Wallpaper mode">
+              <button type="button" id="automatic-button" aria-pressed="true">Automatic</button>
+              <button type="button" id="manual-button" aria-pressed="false">Manual</button>
+            </div>
+            <p class="mode-explanation" id="mode-explanation">Following the weather and time of day.</p>
+            <div class="current-rule"><span class="rule-dot" aria-hidden="true"></span><p id="current-rule">Clear afternoon → Day 1</p></div>
+            <div class="refresh-row"><span id="refresh-label">Next refresh in <span id="refresh-countdown">5:00</span></span><button type="button" id="refresh-button" class="icon-button" aria-label="Refresh sample weather now" title="Refresh sample weather"><svg class="icon"><use href="#i-refresh"/></svg></button></div>
+          </section>
+
+          <details class="sample-controls" id="sample-controls">
+            <summary>Try sample weather<svg class="icon"><use href="#i-chevron"/></svg></summary>
+            <div class="sample-controls-body">
+              <p>Change the sample forecast to explore how scenes respond.</p>
+              <label for="sample-weather">Weather</label>
+              <select id="sample-weather"><option value="clear">Clear skies</option><option value="cloudy">Cloudy</option><option value="rain">Rain</option><option value="drizzle">Drizzle</option><option value="showers">Showers</option><option value="thunderstorm">Thunderstorm</option></select>
+              <label for="sample-time">Local time</label><input type="time" id="sample-time" value="16:20" required>
+              <p class="field-error" id="time-error" hidden>Enter a valid time.</p>
+              <p class="sample-note">Sample time stays fixed. Weather refreshes every five minutes.</p>
+            </div>
+          </details>
+        </aside>
+      </div>
+
+      <section class="scene-library" aria-labelledby="scenes-heading">
+        <div class="scene-library-heading"><div><h2 id="scenes-heading">The five days</h2><p>Your Arcadia Bay collection.</p></div><span id="scene-mode-note">Selecting a scene switches to Manual</span></div>
+        <div class="scene-grid" id="scene-grid" role="group" aria-label="Choose a wallpaper scene"></div>
+      </section>
+      <footer class="page-footer"><span><span class="footer-dot" aria-hidden="true"></span><span id="footer-status">Weather in sync</span></span><span>Interactive prototype · bundled scene clips</span></footer>
+    </section>
+
+    <section id="settings-view" aria-labelledby="settings-heading" hidden>
+      <div class="page-heading"><div><p class="eyebrow">Preferences</p><h1 id="settings-heading" tabindex="-1">Settings</h1></div><span class="settings-save-state" id="settings-save-state">Changes save automatically</span></div>
+      <div class="settings-layout">
+        <nav class="settings-nav" aria-label="Settings sections"><a href="#location-settings">Location<svg class="icon"><use href="#i-arrow"/></svg></a><a href="#display-settings">Display<svg class="icon"><use href="#i-arrow"/></svg></a><a href="#behavior-settings">App behavior<svg class="icon"><use href="#i-arrow"/></svg></a><p>This is a local prototype.<br>Location and displays use sample data. Windows settings are simulated.</p></nav>
+        <div class="settings-content">
+          <section class="settings-section" id="location-settings" aria-labelledby="location-settings-heading">
+            <div class="settings-section-heading"><h2 id="location-settings-heading">Location</h2><p>Choose the location used for weather.</p></div>
+            <div class="location-current"><div class="location-current-icon"><svg class="icon"><use href="#i-pin"/></svg></div><div><strong id="settings-city">Astoria</strong><span id="settings-coordinates">46.1879° N, 123.8313° W</span></div><span class="sample-label">Sample location</span></div>
+            <label for="city-search">Search a city or district</label>
+            <div class="search-field"><svg class="icon"><use href="#i-search"/></svg><input id="city-search" type="search" placeholder="Try Astoria, Seattle, or Bang Rak" autocomplete="off" aria-describedby="search-help" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" role="combobox"><span class="search-hint" aria-hidden="true">⌕</span></div>
+            <p class="field-help" id="search-help">Search a small, offline collection of sample locations.</p>
+            <ul class="search-results" id="search-results" role="listbox" aria-label="Sample location results" hidden></ul>
+            <p class="field-help" id="search-empty" role="status" hidden>No sample location found. You can enter coordinates below.</p>
+            <button type="button" class="secondary-button locate-button" id="use-location"><svg class="icon"><use href="#i-locate"/></svg>Use my location<span class="inline-sample">Sample</span></button>
+            <p class="field-help">Autofills the sample coordinates for Astoria. No GPS access.</p>
+            <form id="coordinates-form" novalidate>
+              <div class="coordinate-fields"><div><label for="latitude">Latitude</label><input type="number" id="latitude" min="-90" max="90" step="any" value="46.1879" required aria-describedby="coordinate-help coordinate-error"></div><div><label for="longitude">Longitude</label><input type="number" id="longitude" min="-180" max="180" step="any" value="-123.8313" required aria-describedby="coordinate-help coordinate-error"></div></div>
+              <p class="field-help" id="coordinate-help">Latitude −90 to 90. Longitude −180 to 180.</p><p class="field-error" id="coordinate-error" role="alert" hidden></p>
+              <div class="coordinate-actions"><button type="submit" class="primary-button" id="apply-coordinates">Apply coordinates<svg class="icon"><use href="#i-arrow"/></svg></button><span id="coordinate-status" class="field-help" role="status"></span></div>
+            </form>
+          </section>
+          <section class="settings-section" id="display-settings" aria-labelledby="display-settings-heading">
+            <div class="settings-section-heading"><h2 id="display-settings-heading">Display</h2><p>Set the wallpaper display and appearance.</p></div>
+            <div class="setting-row"><div><label for="display-select">Wallpaper display</label><p>Available displays are samples.</p></div><select id="display-select"><option value="1">Display 1 · Primary</option><option value="2">Display 2 · Secondary</option><option value="all">All displays</option></select></div>
+            <div class="display-diagram" aria-hidden="true"><div class="mini-monitor selected" data-monitor="1"><span>1</span><small>Primary</small></div><div class="mini-monitor" data-monitor="2"><span>2</span><small>Secondary</small></div></div>
+            <div class="setting-row"><div><label for="fit-select">Wallpaper fit</label><p>Also applies to the preview.</p></div><select id="fit-select"><option value="cover">Fill screen</option><option value="contain">Fit to screen</option><option value="fill">Stretch</option></select></div>
+            <div class="setting-row"><div><label for="aspect-select">Preview screen</label><p>Try a different display shape.</p></div><select id="aspect-select"><option value="wide">Widescreen · 16:9</option><option value="ultrawide">Ultrawide · 21:9</option><option value="classic">Standard · 4:3</option></select></div>
+            <div class="setting-row"><div><label for="motion-switch">Reduce motion</label><p>New scenes start paused. Interface transitions are removed.</p><span class="field-help" id="system-motion-note"></span></div><button type="button" class="switch" id="motion-switch" role="switch" aria-checked="false" aria-labelledby="motion-label"><span class="sr-only" id="motion-label">Reduce motion</span><span class="switch-thumb"></span></button></div>
+          </section>
+          <section class="settings-section" id="behavior-settings" aria-labelledby="behavior-settings-heading">
+            <div class="settings-section-heading"><h2 id="behavior-settings-heading">App behavior</h2><p>Control startup and automatic pausing.</p></div>
+            <div class="setting-row"><div><span class="setting-label" id="startup-label">Start with Windows</span><p>Have your wallpaper ready when you sign in.</p></div><button type="button" class="switch" id="startup-switch" role="switch" aria-checked="true" aria-labelledby="startup-label"><span class="switch-thumb"></span></button></div>
+            <div class="setting-row"><div><span class="setting-label" id="fullscreen-label">Pause during fullscreen apps</span><p>Pause the wallpaper while a fullscreen app is active.</p></div><button type="button" class="switch" id="fullscreen-switch" role="switch" aria-checked="true" aria-labelledby="fullscreen-label"><span class="switch-thumb"></span></button></div>
+            <div class="fullscreen-sample"><div><strong>Try fullscreen behavior</strong><p id="fullscreen-sample-status">No sample fullscreen app is running.</p></div><button class="secondary-button" type="button" id="simulate-fullscreen" aria-pressed="false">Simulate fullscreen app</button></div>
+          </section>
+          <div class="settings-bottom"><p>Preferences stay in this browser when local storage is available.</p><button type="button" class="text-button" id="reset-button">Reset prototype</button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="rules-dialog" aria-labelledby="rules-title">
+    <div class="dialog-heading"><div><p class="eyebrow">Automatic mode</p><h2 id="rules-title">How scenes change</h2></div><button type="button" class="icon-button close-dialog" aria-label="Close scene rules"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <p class="dialog-intro">Automatic follows your local time, then checks the weather.</p>
+    <ol class="rules-list"><li><span class="rule-number">01</span><div><strong>Start with the time</strong><p>Morning & afternoon → Day 1<br>Evening → Day 4<br>Night → Day 3</p><small>Sample hours: day 06:00–17:59, evening 18:00–20:59, night 21:00–05:59.</small></div></li><li><span class="rule-number">02</span><div><strong>Let the clouds roll in</strong><p>Cloudy weather → Day 2 during daytime or evening. Night stays Day 3.</p></div></li><li><span class="rule-number">03</span><div><strong>Rain takes priority</strong><p>Rain, drizzle, showers, or thunderstorms → Day 5, even at night.</p></div></li></ol>
+    <div class="dialog-note"><svg class="icon"><use href="#i-info"/></svg><p>Weather refreshes every five minutes. A manually selected scene stays until you enable Automatic again.</p></div><button class="primary-button close-dialog dialog-done" type="button">Got it<svg class="icon"><use href="#i-check"/></svg></button>
+  </dialog>
+  <dialog id="reset-dialog" aria-labelledby="reset-title"><div class="dialog-heading"><h2 id="reset-title">Reset the prototype?</h2><button type="button" class="icon-button close-reset" aria-label="Cancel reset"><svg class="icon"><use href="#i-close"/></svg></button></div><p class="dialog-intro">Restore the sample location, weather, scenes, and preferences to their original values.</p><div class="dialog-actions"><button class="secondary-button close-reset" type="button">Keep my settings</button><button class="primary-button" type="button" id="confirm-reset">Reset prototype</button></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden><svg class="icon"><use href="#i-check"/></svg><span id="toast-message"></span></div>
+  <div class="sr-only" id="announcer" role="status" aria-live="polite" aria-atomic="true"></div>
+  <noscript><p class="noscript-message">Enable JavaScript to explore this interactive prototype.</p></noscript>
+  <script src="core.js"></script>
+  <script src="assets.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

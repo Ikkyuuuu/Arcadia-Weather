@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="A minimal interface draft for Arcadia Weather.">
+  <title>Arcadia Weather — Design preview</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%232b2c29'/%3E%3Cpath d='M10 29L20 10l10 19M14 23h12' fill='none' stroke='%23f7f7f3' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#wallpaper">Skip to wallpaper</a>
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14Z"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M6 18a4 4 0 0 1-.7-7.9 6 6 0 0 1 11.6-1A4.5 4.5 0 1 1 18 18Z"/></symbol>
+    <symbol id="i-rain" viewBox="0 0 24 24"><path d="M5 15a4 4 0 0 1 .3-7.3 6 6 0 0 1 11.6-1A4.5 4.5 0 0 1 20 15M8 17l-1 3m6-3-1 3m6-3-1 3"/></symbol>
+    <symbol id="i-sunset" viewBox="0 0 24 24"><path d="M3 17h18M5 21h14M7 17a5 5 0 0 1 10 0M12 3v4M4 9l2 2m14-2-2 2M12 3l-2 2m2-2 2 2"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5M6.2 6.2A8 8 0 0 1 20 12M4 12a8 8 0 0 0 13.8 5.8"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24"><path d="M11 4 6 8H3v8h3l5 4ZM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="i-muted" viewBox="0 0 24 24"><path d="M11 4 6 8H3v8h3l5 4Zm5 5 6 6m0-6-6 6"/></symbol>
+    <symbol id="i-locate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M12 16v5m-5 0h10"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="var(--background)"/><circle cx="15" cy="17" r="3" fill="var(--background)"/></symbol><symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol></svg>
+  <header class="app-header">
+    <div class="app-shell header-inner">
+      <span class="wordmark">arcadia<span class="sr-only"> Weather</span></span>
+      <div class="header-actions">
+        <button class="icon-button" id="theme-button" aria-label="Switch to dark theme" title="Appearance"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+        <button class="icon-button" data-open="settings-dialog" aria-haspopup="dialog" aria-label="Open settings" title="Settings"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg></button>
+      </div>
+    </div>
+  </header>
+  <div class="app-shell">
+    <main id="wallpaper" tabindex="-1" aria-label="Wallpaper">
+      <div class="context-row">
+        <div class="location-weather">
+          <button class="location-button" data-open="settings-dialog" data-focus="district" aria-haspopup="dialog" aria-label="Change location, currently Bangkok"><span id="header-location">Bangkok</span><svg class="icon tiny" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+          <span class="context-divider" aria-hidden="true"></span>
+          <button class="weather-button" data-open="preview-dialog" aria-haspopup="dialog" aria-label="Sample weather: 29 degrees Celsius, partly cloudy"><svg class="icon" id="weather-icon" aria-hidden="true"><use href="#i-sun"/></svg><span id="temperature">29°</span><span class="condition" id="weather-condition">Partly cloudy</span></button>
+        </div>
+        <label class="automatic-control" for="automatic-toggle" title="Follow the selected location’s time and weather"><span>Automatic</span><input class="switch" id="automatic-toggle" type="checkbox" role="switch" checked aria-describedby="automatic-hint"></label>
+        <span class="sr-only" id="automatic-hint">Follows sample local time and weather. Choosing a scene holds it until Automatic is turned on again.</span>
+      </div>
+
+      <div class="hero" id="hero" role="group" aria-label="Arcadia Bay still-image preview">
+        <div class="hero-images" id="hero-images">
+          <img class="hero-image" src="assets/day1.jpg" alt="Arcadia Bay in daylight" data-scene-image="1" aria-hidden="true">
+          <img class="hero-image" src="assets/day2.jpg" alt="Clouds over Arcadia Bay" data-scene-image="2" aria-hidden="true">
+          <img class="hero-image" src="assets/day3.jpg" alt="Arcadia Bay at night" data-scene-image="3" aria-hidden="true">
+          <img class="hero-image visible" src="assets/day4.jpg" alt="Evening light over Arcadia Bay" data-scene-image="4">
+          <img class="hero-image" src="assets/day5.jpg" alt="A storm over Arcadia Bay" data-scene-image="5" aria-hidden="true">
+        </div>
+        <span class="paused-label" id="paused-label" hidden><svg class="icon tiny" aria-hidden="true"><use href="#i-pause"/></svg>Paused</span>
+      </div>
+
+      <div class="scene-toolbar">
+        <div class="scene-caption"><div class="scene-heading"><h1 id="scene-title">Evening</h1><span class="scene-meta" id="scene-meta">Day 04</span><span class="manual-label" id="manual-label" hidden>Manual</span></div><p class="scene-detail" id="scene-detail">Sunset 18:08 · local time</p></div>
+        <div class="playback-controls">
+          <button class="icon-button" id="pause-button" aria-label="Pause preview" aria-pressed="false" title="Pause"><svg class="icon" aria-hidden="true"><use href="#i-pause"/></svg></button>
+          <details class="sound-control" id="sound-control"><summary class="icon-button" aria-label="Sound controls, muted" title="Sound"><svg class="icon" id="sound-icon" aria-hidden="true"><use href="#i-muted"/></svg></summary><div class="sound-popover"><div class="sound-heading"><span>Sound</span><button class="text-button" id="mute-button" aria-label="Mute sound" aria-pressed="true">Off</button></div><label class="sr-only" for="volume">Volume</label><input id="volume" type="range" min="0" max="100" value="35"><output for="volume" id="volume-value">35%</output><span class="sound-note">Audio is simulated in this preview.</span></div></details>
+        </div>
+      </div>
+
+      <div class="scene-list" role="group" aria-label="Choose a wallpaper scene" aria-describedby="scene-help">
+        <button class="scene-card" data-scene="1" aria-pressed="false"><img src="assets/day1.jpg" alt=""><span><span class="scene-number">01</span><span>Daylight</span></span></button>
+        <button class="scene-card" data-scene="2" aria-pressed="false"><img src="assets/day2.jpg" alt=""><span><span class="scene-number">02</span><span>Cloudy</span></span></button>
+        <button class="scene-card" data-scene="3" aria-pressed="false"><img src="assets/day3.jpg" alt=""><span><span class="scene-number">03</span><span>Night</span></span></button>
+        <button class="scene-card selected" data-scene="4" aria-pressed="true"><img src="assets/day4.jpg" alt=""><span><span class="scene-number">04</span><span>Evening</span></span></button>
+        <button class="scene-card" data-scene="5" aria-pressed="false"><img src="assets/day5.jpg" alt=""><span><span class="scene-number">05</span><span>Rain</span></span></button>
+      </div>
+      <span class="sr-only" id="scene-help">Use arrow keys to move between scenes. Press Enter or Space to hold a scene manually.</span>
+      <p class="sr-only" id="scene-status" role="status" aria-live="polite" aria-atomic="true"></p>
+    </main>
+    <footer class="app-footer"><span>Design preview<span class="footer-dot" aria-hidden="true">·</span>Still images</span><button class="text-button sample-button" data-open="preview-dialog" aria-haspopup="dialog">Sample data<span class="footer-dot" aria-hidden="true">·</span>Offline<svg class="icon tiny" aria-hidden="true"><use href="#i-chevron"/></svg></button></footer>
+  </div>
+
+  <dialog id="settings-dialog" aria-labelledby="settings-heading">
+    <div class="dialog-heading"><h2 id="settings-heading">Settings</h2><button class="icon-button" data-close aria-label="Close settings"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+    <form id="settings-form" novalidate>
+      <div class="dialog-content">
+        <section class="settings-section" aria-labelledby="location-heading">
+          <div class="section-heading"><h3 id="location-heading">Location</h3><button type="button" class="text-button locate-button" id="locate-button"><svg class="icon" aria-hidden="true"><use href="#i-locate"/></svg><span>Use my location</span></button></div>
+          <div class="search-field"><label class="sr-only" for="district">City or district</label><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input type="search" id="district" name="district" value="Bangkok" placeholder="City or district" autocomplete="off" aria-controls="location-results" aria-describedby="location-hint"></div>
+          <p class="helper location-hint" id="location-hint">Offline sample search. Location autofill is simulated.</p>
+          <div id="location-results" class="location-results" role="group" aria-label="Sample locations" hidden></div>
+          <p class="inline-notice" id="location-status" role="status" hidden></p>
+          <details class="settings-details" id="coordinates-details"><summary>Enter coordinates<svg class="icon tiny" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="details-content"><div class="field"><label for="location-name">Name</label><input id="location-name" value="Bangkok" maxlength="100" required></div><div class="two-fields"><div class="field"><label for="latitude">Latitude</label><input id="latitude" type="number" min="-90" max="90" step="any" value="13.7563" required></div><div class="field"><label for="longitude">Longitude</label><input id="longitude" type="number" min="-180" max="180" step="any" value="100.5018" required></div></div><div class="field"><label for="timezone">Timezone</label><input id="timezone" value="Asia/Bangkok" placeholder="e.g. Asia/Bangkok" spellcheck="false" required></div></div></details>
+        </section>
+        <section class="settings-section" aria-labelledby="desktop-heading">
+          <h3 id="desktop-heading">Desktop</h3>
+          <div class="preference"><label for="display">Display</label><select id="display"><option value="primary">Primary display</option><option value="secondary">Display 2 · Sample</option></select></div>
+          <label class="preference" for="startup"><span>Start with Windows</span><input class="switch" id="startup" type="checkbox" role="switch"></label>
+          <label class="preference" for="fullscreen"><span>Pause for fullscreen apps</span><input class="switch" id="fullscreen" type="checkbox" role="switch" checked></label>
+        </section>
+        <details class="settings-details advanced-details"><summary>Scene timing<svg class="icon tiny" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="details-content"><div class="two-fields"><div class="field"><label for="cloud-enter">Clouds appear at (%)</label><input type="number" id="cloud-enter" min="1" max="100" value="70" required></div><div class="field"><label for="cloud-exit">Clouds clear at (%)</label><input type="number" id="cloud-exit" min="0" max="99" value="55" required></div></div><div class="field"><label for="evening">Evening before sunset · minutes</label><input type="number" id="evening" min="0" max="240" value="60" required></div><div class="field"><label for="night">Night after sunset · minutes</label><input type="number" id="night" min="0" max="180" value="30" required></div></div></details>
+      </div>
+      <div class="dialog-footer"><p id="save-status" role="status">Saved for this session only.</p><button class="button primary" type="submit">Save changes</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="preview-dialog" aria-labelledby="preview-heading">
+    <div class="dialog-heading"><h2 id="preview-heading">Sample weather</h2><button class="icon-button" data-close aria-label="Close sample weather"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+    <div class="dialog-content">
+      <p class="helper">Try a condition with Automatic on to see the scene change.</p>
+      <div class="field"><label for="scenario-select">Condition</label><select id="scenario-select"><option value="day">Clear morning</option><option value="afternoon">Clear afternoon</option><option value="evening" selected>Evening</option><option value="night">Clear night</option><option value="clouds">Cloudy day</option><option value="evening-clouds">Cloudy evening</option><option value="night-clouds">Cloudy night</option><option value="rain">Rain</option><option value="drizzle">Morning drizzle</option><option value="showers">Evening showers</option><option value="storm">Night thunderstorm</option></select></div>
+      <div class="preview-selection" role="status"><span id="sample-scene">Evening · Day 04</span><button class="text-button" id="resume-automatic" hidden>Resume Automatic</button></div>
+      <dl class="weather-details"><div><dt>Location</dt><dd id="sample-location">Bangkok</dd></div><div><dt>Sample local time</dt><dd id="weather-time">17:42</dd></div><div><dt>Cloud cover</dt><dd id="cloud-cover">32%</dd></div><div><dt>Precipitation</dt><dd id="precipitation">0 mm</dd></div><div><dt>Sunrise</dt><dd id="sunrise-time">06:09</dd></div><div><dt>Sunset</dt><dd id="sunset-time">18:08</dd></div></dl>
+      <p class="helper" id="sample-timing-note">Illustrative local times for Bangkok.</p>
+      <div class="refresh-row"><span id="refresh-status" role="status">Offline sample · No live connection</span><button class="icon-button" id="refresh-button" aria-label="Refresh sample weather" title="Refresh sample weather"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg></button></div>
+      <details class="settings-details"><summary>How scenes change<svg class="icon tiny" aria-hidden="true"><use href="#i-chevron"/></svg></summary><dl class="rule-list"><div><dt>01 · Daylight</dt><dd>Morning and afternoon</dd></div><div><dt>04 · Evening</dt><dd>Around local sunset</dd></div><div><dt>03 · Night</dt><dd>After dusk until sunrise</dd></div><div><dt>02 · Cloudy</dt><dd>Replaces daylight and evening only</dd></div><div><dt>05 · Rain</dt><dd>Rain, drizzle, showers and thunderstorms replace every scene</dd></div></dl><p class="helper">Timing follows the selected location’s sunrise and sunset. Adjust the offsets in Settings.</p></details>
+      <p class="helper preview-note">Windows app: Open-Meteo updates every 5 minutes. This offline preview uses sample weather and solar times.</p>
+    </div>
+    <div class="dialog-footer"><span class="helper">Choose a scene to hold it manually.</span><button class="button" data-close>Done</button></div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

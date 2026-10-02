@@ -1,0 +1,62 @@
+ARCADIA WEATHER / HTML DESIGN PREVIEW
+
+OPEN
+Double-click Arcadia-preview.html. It includes all images, styles, and
+interactions and works offline. Refresh the file if it is already open.
+
+EDIT
+index.html         Structure, labels, and dialogs.
+styles.css         Theme tokens, spacing, typography, and responsive layout.
+app.js             Sample conditions and interactions.
+assets/day1-5.jpg   Scene images from the existing Windows app.
+
+Open index.html when editing. Rebuild the portable HTML after changes:
+  .\ui-draft\build-preview.ps1
+Run this from the project root, or use .\build-preview.ps1 in this folder.
+
+DESIGN
+One scene preview, a compact weather line, five small scene choices,
+and essential playback controls. Settings open in a dialog. Coordinates,
+scene timing, volume, and sample weather are available on demand.
+
+TRY
+- Choose a scene to hold it. Turn Automatic on to follow sample weather.
+- Click the weather or Sample data to try another weather scenario.
+- The sample dialog stays open so conditions can be compared. Its Resume
+  Automatic control releases a manually held scene.
+- Cloudy nights keep Day 3; rain, drizzle, showers and thunderstorms select
+  Day 5 at any hour. Drizzle demonstrates a wet code with 0 mm measured rain.
+- Use the moon/sun icon to switch between light and dark themes.
+- Open settings with the sliders icon or the location name.
+- Search for Bangkok, a Bangkok district, Chiang Mai or Portland. Choose a
+  result before saving, or enter coordinates and a timezone directly.
+- Use my location simulates Windows autofill. Closing Settings cancels a
+  pending lookup. Actual GPS availability and accuracy depend on the device.
+- Named sample places have illustrative sunrise/sunset fixtures. Custom
+  coordinates use clearly labeled 06:00/18:00 placeholders, not solar estimates.
+- Save applies changes only for this session. Closing Settings without saving
+  discards edits. Advanced timing offsets affect the automatic scene choice.
+- Pause stops the gentle image motion. Sound opens a volume popover.
+- Raising the volume unmutes the simulated sound; zero volume mutes it.
+- Tab reaches all controls. Left/Right and Home/End move focus among scenes;
+  Enter/Space selects. Search results support Up/Down. Escape dismisses search
+  results, sound controls or the active dialog. Focus indicators stay visible.
+- Reduced-motion preferences disable drift, crossfades and dialog animation.
+
+SCOPE
+This is an interface prototype using sample weather and location data.
+No network, GPS, audio/video playback, or desktop access occurs.
+The image preview uses stills with a gentle pan and scene crossfades.
+Reloading resets the draft. No Windows app files or settings are changed.
+The five-minute refresh is simulated locally; it does not call Open-Meteo.
+The standalone file embeds all five images, CSS and JavaScript. No fonts,
+packages, server or internet connection are required.
+
+DESIGN HANDOFF
+Navbar remains exactly #36bbd9 in both themes, at full window width.
+The wordmark and controls share the main content's centered alignment.
+The hero keeps a 16:9 ratio; controls wrap on small windows. Only the selected
+scene has an underline. Coordinates, timing and volume stay collapsed.
+Desktop preferences are UI-only. The Windows app already bundles its videos;
+no video-path settings are included.
+Visual inspection is left to the user; no browser/desktop automation is used.

@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>ArcadiaWeather</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\arcadia.ico</ApplicationIcon>
+    <Version>1.5.3</Version>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <VlcWindowsX64Enabled>true</VlcWindowsX64Enabled>
+    <VlcWindowsX86Enabled>false</VlcWindowsX86Enabled>
+    <VlcWindowsArm64Enabled>false</VlcWindowsArm64Enabled>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <IncludeAllContentForSelfExtract Condition="'$(BundleAllAssets)' == 'true'">true</IncludeAllContentForSelfExtract>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ArcadiaWeather.Core\ArcadiaWeather.Core.csproj" />
+    <PackageReference Include="LibVLCSharp" Version="3.10.1" />
+    <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.24" />
+    <Resource Include="Assets\*.jpg" />
+    <Resource Include="Assets\butterfly.png" />
+    <Resource Include="Assets\arcadia.ico" />
+    <Content Include="Assets\Preview\*.mp4" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="false" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(BundleAllAssets)' == 'true'">
+    <Content Include="$(BundleMediaSource)\Arcadia Bay Day 1 Sound AAC.mp4;$(BundleMediaSource)\Arcadia Bay Day 2 Sound AAC.mp4;$(BundleMediaSource)\Arcadia Bay Day 3 Sound AAC.mp4;$(BundleMediaSource)\Arcadia Bay Day 4 Sound AAC.mp4;$(BundleMediaSource)\Arcadia Bay Day 5 Sound AAC.mp4">
+      <Link>Media\%(Filename)%(Extension)</Link>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <ExcludeFromSingleFile>false</ExcludeFromSingleFile>
+    </Content>
+    <Content Include="$(BundleManifest)" Link="bundled-media.json" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="false" />
+    <Content Include="..\..\README.md;..\..\THIRD-PARTY-NOTICES.txt" Link="%(Filename)%(Extension)" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="false" />
+    <Content Include="..\..\Licenses\**\*" Link="Licenses\%(RecursiveDir)%(Filename)%(Extension)" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="false" />
+  </ItemGroup>
+  <Target Name="KeepVlcPluginsExternal" AfterTargets="CollectVlcFilesToCopyWindows">
+    <ItemGroup>
+      <Content Update="@(Content)" Condition="$([System.String]::Copy('%(Content.Link)').StartsWith('libvlc'))">
+        <ExcludeFromSingleFile Condition="'$(BundleAllAssets)' != 'true'">true</ExcludeFromSingleFile>
+        <ExcludeFromSingleFile Condition="'$(BundleAllAssets)' == 'true'">false</ExcludeFromSingleFile>
+      </Content>
+    </ItemGroup>
+  </Target>
+</Project>

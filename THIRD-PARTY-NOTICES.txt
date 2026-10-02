@@ -1,0 +1,26 @@
+Arcadia Weather — third-party components and data
+
+LibVLCSharp 3.10.1
+Copyright VideoLAN and contributors. LGPL-2.1-or-later.
+https://code.videolan.org/videolan/LibVLCSharp
+https://github.com/videolan/libvlcsharp/blob/3.x/LICENSE
+
+VideoLAN.LibVLC.Windows 3.0.24 / libVLC and plugins
+Copyright VideoLAN and contributors. See the distributed license files and source for component-specific terms; libVLC is LGPL-2.1-or-later and plugin licenses vary.
+https://www.videolan.org/vlc/libvlc.html
+https://code.videolan.org/videolan/vlc
+https://code.videolan.org/videolan/libvlc-nuget
+The single-EXE distribution embeds these libraries and extracts them into a user-owned .NET cache at launch. The extracted libraries and plugins remain separate files. Their source locations and license texts are included in the bundle.
+
+.NET runtime
+Copyright .NET Foundation and contributors. MIT and component notices.
+https://github.com/dotnet/runtime
+
+Open-Meteo weather data
+https://open-meteo.com/
+Data license: Creative Commons Attribution 4.0 International (CC BY 4.0).
+https://creativecommons.org/licenses/by/4.0/
+Weather values are mapped to wallpaper scenes and cloud hysteresis thresholds. Free API access is for noncommercial use and is subject to Open-Meteo terms and rate limits.
+
+Life is Strange videos
+This personal bundle includes the five local video files supplied by the user. Life is Strange and its assets belong to their respective rights holders. No affiliation or endorsement is implied.
